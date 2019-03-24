@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>订单详情</title>
+		<meta name="Alipay:title" content="订单详情">
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+		<meta http-equiv="Pragma" content="no-cache">
+		<meta http-equiv="Cache-Control" content="no-cache">
+		<meta http-equiv="Expires" content="0">	
+		<!-- 埋点 -->
+		<meta name="data-bizType" content=""/>
+		<meta name="data-aspm" content=""/>
+        <link rel="stylesheet" href="../stylesheets/mui.showLoading.css">
+		<link rel="stylesheet" type="text/css" href="../stylesheets/alicars.css"/>
+		<script type="text/javascript" src="../javascripts/rem.js"></script>
+        <script src="../javascripts/mui.min.js"></script>
+        <script src="../javascripts/mui.showLoading.js"></script>
+		<script src="../javascripts/axios.min.js"></script>
+		<script src="../javascripts/api.js"></script>
+		<script src="../javascripts/api_help.js"></script>
+		<script src="https://gw.alipayobjects.com/as/g/h5-lib/alipayjsapi/3.1.1/alipayjsapi.min.js"></script>
+	</head>
+	<body>
+		<div class="car_content">
+	        <div class="car_mpecot">
+				<ul class="mui-table-view mui-table-view-chevron">
+					<li class="car-mui-table-view-cell-aft carui-stop-detail-li-clear-padding">
+						<div class="carui-order-detail-top-box">
+							<span id="parking_name" class="carui-order-detail-top-title"></span>
+						</div>
+						<div id="total_price" class="carui-order-detail-top-money">&nbsp;元</div>
+						
+						<div class="carui-order-detail-top-deal-status">待付款</div>
+						<div class="car_mpecotTBottom">
+							
+							<div class="carui-order-detail-text-box">
+								<span class="car_mpecotTL">应付金额</span>
+								<span id="should_price" class="car_mpecotTR">&nbsp;元</span>
+							</div>
+							<div class="carui-order-detail-text-box">
+								<span class="car_mpecotTL">已付金额</span>
+								<span class="car_mpecotTR">0.00&nbsp;元</span>
+							</div>
+							<div class="carui-order-detail-text-box">
+								<span class="car_mpecotTL">优惠金额</span>
+								<span id="discount_price" class="car_mpecotTR">0.00&nbsp;元</span>
+							</div>
+						
+							<div class="carui-order-detail-text-box">
+								<span class="car_mpecotTL">车牌号</span>
+								<span id="car_number" class="car_mpecotTR"></span>
+							</div>
+							
+							<div class="carui-order-detail-text-box">
+								<span class="car_mpecotTL">入场时间</span>
+								<span id="in_time" class="car_mpecotTR">2018-06-11 19:20:00</span>
+							</div>
+							<div class="carui-order-detail-text-box">
+								<span class="car_mpecotTL">停车时长</span>
+								<span id="in_duration" class="car_mpecotTR"></span>
+							</div>
+							<!--
+							注：这里是按钮灰化的效果
+							<div class="carui-order-detail-text-box">
+								<span class="car_mpecotTL">订单编号</span>
+								<span class="car_mpecotTR">46dc85w928cad44579c6879</span>
+							</div>
+							-->
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="carui-order-detail-tips-box">
+	    	<img src="../images/han.png"/><span>请于付款后15分钟内离场，超时将加收停车费</span>
+    	</div>
+    	<div class="carui-order-detail-button-box"><button class="confirmBtn" onclick="pay()">立即付款</button>
+		<!--
+		<button class="confirmBtn unable">已支付</button></div>
+		-->
+		<script>
+			var auth_code = ''; // 传递收到的授权码
+			var car_id = ''; // 支付宝对应car_id
+			var user_id = ''; // 支付者支付宝账号id
+			var parking_name = '';
+            var yuen_parking_id = '';
+			var parking_id = '';
+			var car_number = '';
+			var total_paid = 0.10; // 总价
+			var discountable_paid = 0.00; // 折扣
+			var alipay_trade_no = ''; // 支付宝订单号
+			var in_time = ''; // 入场时间
+			var in_duration = ''; // 停车时间
+			window.onload = function () {
+                var params = GetRequest(); // 获取url地址?后的参数转换成json
+			    console.log('后缀', params);
+                // auth_code = "aa83b8e82f7548f3b33d7fa9b874TX68";
+                // car_id = "2088302435496684191812126067";
+                // alipay_parking_id = "PI1552750908943618170";
+                auth_code = params.auth_code;
+                car_id = params.car_id;
+                parking_id = params.parking_id;
+                var para = {
+                    auth_code: auth_code,
+                    car_id: car_id,
+                    parking_id: parking_id
+				}
+                axiosReq(app_api + 'parking.alipay.get_car_number', para, function (err, data) {
+                    if (!!err) {
+                        // app.showToast(err.message)
+                    } else {
+                        car_number = data.car_number;
+                        yuen_parking_id = data.yuen_parking_id;
+						user_id = data.user_id;
+						parking_name = data.parking_name;
+						in_time = data.in_time;
+						in_duration = data.in_duration;
+                        document.getElementById('total_price').innerHTML = total_paid + ' 元';
+                        document.getElementById('should_price').innerHTML = total_paid + ' 元';
+                        document.getElementById('discount_price').innerHTML = discountable_paid + ' 元';
+                        document.getElementById('parking_name').innerHTML = data.parking_name;
+                        document.getElementById('car_number').innerHTML = data.car_number.slice(0,2) + '**' + data.car_number.slice(4);
+                        document.getElementById('in_time').innerHTML = data.in_time;
+                        document.getElementById('in_duration').innerHTML = data.in_duration + ' 分钟';
+                        // app.showToast('绑定成功！')
+                    }
+                })
+			}
+
+			function pay () {
+				var para = {
+                    buyer_id: user_id,
+                    total_amount: total_paid,
+                    discountable_amount: discountable_paid,
+                    subject: '停车费',
+                    body: parking_name + '停车费',
+					yuen_parking_id: yuen_parking_id,
+					parking_name: parking_name,
+					car_number: car_number,
+					in_time:in_time,
+                    in_duration: in_duration,
+					parking_id: parking_id
+				}
+                axiosReq(app_api + 'parking.alipay.order.create', para, function (err, data) {
+                    if (!!err) {
+                        // app.showToast(err.message)
+                    } else {
+                        alipay_trade_no = data.trade_no;
+                        tradePay(data.trade_no)
+                    }
+                })
+
+			}
+
+            function ready(callback) {
+                if (window.AlipayJSBridge) {
+                    callback && callback();
+                } else {
+                    document.addEventListener('AlipayJSBridgeReady', callback, false);
+                }
+            }
+
+            function tradePay(tradeNO) {
+			    console.log('生成支付宝订单', tradeNO);
+                ready(function(){
+                    // 通过传入交易号唤起快捷调用方式(注意tradeNO大小写严格)
+                    AlipayJSBridge.call("tradePay", {
+                        tradeNO: tradeNO
+                    }, function (data) {
+                        log(JSON.stringify(data));
+                        if ("9000" == data.resultCode) {
+                            log("支付成功");
+                        } else if ("6001" == data.resultCode) {
+                            log('用户取消订单')
+                            var para = {
+                                alipay_order_number: tradeNO
+                            }
+                            axiosReq(app_api + 'parking.alipay.order.cancel', para, function (err, data) {
+                                if (!!err) {
+                                    log('取消失败')
+                                    // app.showToast(err.message)
+                                } else {
+                                    log('取消成功')
+                                }
+                            })
+						}
+                    });
+                });
+            }
+
+		</script>
+	</body>
+</html>

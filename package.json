@@ -1,0 +1,27 @@
+{
+  "name": "yuen-shenhuohao",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/parkingwww"
+  },
+  "dependencies": {
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.9",
+    "express": "~4.16.0",
+    "http-errors": "~1.6.2",
+    "jade": "~1.11.0",
+    "morgan": "~1.9.0"
+  },
+  "devDependencies": {
+    "alipay-sdk": "^3.0.4",
+    "body-parser": "^1.18.3",
+    "connect-multiparty": "^2.2.0",
+    "ejs": "^2.6.1",
+    "moment": "^2.24.0",
+    "multer": "^1.4.1",
+    "pg": "^7.9.0",
+    "request": "^2.88.0",
+    "xml2js": "^0.4.19"
+  }
+}

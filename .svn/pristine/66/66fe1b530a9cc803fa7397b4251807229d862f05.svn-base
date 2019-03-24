@@ -1,0 +1,24 @@
+{
+  "alipay": {
+    "ALIPAY_PUBLIC_KEY": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAvMdO92rIweqrn+4k2O/YcQU4xSBnsD9DqPm/hqgmZ7NQDThhNpMqkuZKZlcBJbN6vRahfWlYoFHtibWxWA/LYKvSA2PgMw8SQXu40IKTqOFhs1H6m/1pyjsGg4bSbRkqh6rlxKFL2hheBsDKhj+yj77StXtU4+u4ObbjwpxsfwutKqRXW/2OGN8pf0BDHuJ0eBqFssHt6DZi9mvkfRVl5PNtzrtICsR0CBFvsZgMh5ZRrPW0dlc46WDwf6QLbMQNStB8XRVRob2UJFR7jinG1ilOXOjkAwQ960jbIQ0oDUuGFzuUDn4zODUzqNt39mTrfDax7whS71M4dvMFWnIWmQIDAQAB",
+    "SIGN_CHARSET": "GBK",
+    "CHARSET": "GBK",
+    "SIGN_TYPE": "RSA2",
+    "PARTNER": "",
+    "APP_ID": "2019031163550021",
+    "PRIVATE_KEY": "",
+    "PUBLIC_KEY": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAmtgYz/1nLq6L1a+gb/2tNGU2UhJSyLUm8PFsIAQgckC/DtIcGcBBfOXeswBNhR9B+MSorM40tUG41ELj4QCM++kkJqkAwzET0bJmyUWZMjGzPSgnuv9q2je0rPgAQc2BSguud6RjiQHAEGngmKUDurxizyQOUOvgBPPdrmTLeHfhVqXC3QnwFR6JElDPu4DsIABhmktbhRVq/lrGxC/3XiMsI/omRHon9p+kOCE0E93FnWnvRsiPYcxo3Fg8f3vq46vqNTwnQRMnd11HNXoVUtJRYjnVjFbh2hEFFcVacIRkkJj10o29V8g4LW04EkAeWue+/vqJPNuvlnQgJW4kGwIDAQAB",
+    "ALIPAY_GATEWAY": "https://openapi.alipay.com/gateway.do",
+    "GRANT_TYPE": "authorization_code"
+  },
+  "path":{
+    "doc_file": "/var/tmp/upload/real_name_reg/"
+  },
+  "pg_parking_pay": {
+    "host": "www.nayuntec.cn",
+    "port": 7433,
+    "user": "postgres",
+    "password": "nxg@201804",
+    "database": "yuen_parking_pay"
+  }
+}
